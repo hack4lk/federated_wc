@@ -37,25 +37,20 @@ export class MyComponent {
   /**
    * The tenant for which this component is being rendered.
    */
-  @Prop() tenant: Tenants;
+  private tenant: Tenants;
 
   componentDidLoad() {
     setTimeout(() => {
-      this.loading = false; // Simulate loading completion
       this.tenant = this.tenant || Tenants.WFM; // Default to WFM if tenant is not provided - later we might want to throw an error....
       // in production, this would be a call to the service to fetch tenant-specific data or configurations
-    }, 1500); // Simulate async loading of tenant information
+
+      this.loading = false; // Simulate loading completion
+    }, 1000); // Simulate async loading of tenant information
   }
 
   render() {
-    {
-      if (!this.tenant || this.loading) {
-        return (
-          <div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" height={60} />
-          </div>
-        );
-      }
+    if (this.loading) {
+      return <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" height={60} />;
     }
     return (
       <div>

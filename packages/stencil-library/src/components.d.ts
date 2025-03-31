@@ -18,7 +18,6 @@ export namespace Components {
         "tenant": Tenants;
     }
     interface OneColumnLayout {
-        "config": TenantConfig;
         "output": string;
     }
     interface OneColumnTemplate {
@@ -73,7 +72,6 @@ declare namespace LocalJSX {
         "tenant"?: Tenants;
     }
     interface OneColumnLayout {
-        "config"?: TenantConfig;
         "output"?: string;
     }
     interface OneColumnTemplate {

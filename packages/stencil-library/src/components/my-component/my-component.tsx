@@ -1,8 +1,6 @@
 import { Component, Prop, h, State } from '@stencil/core';
 import { format } from '../../utils/utils';
-import { Tenants } from '../../types/tenants';
-import { RunTemplate } from './templates/run';
-import { WfmTemplate } from './templates/wfm';
+import { Tenants, TenantConfig } from '../../types/tenants';
 
 @Component({
   tag: 'my-component',
@@ -10,24 +8,19 @@ import { WfmTemplate } from './templates/wfm';
   shadow: true,
 })
 export class MyComponent {
-  /**
-   * The first name
-   */
   @Prop() first: string;
-
-  /**
-   * The middle name
-   */
   @Prop() middle: string;
-
-  /**
-   * The last name
-   */
   @Prop() last: string;
 
   private getText(): string {
     return format(this.first, this.middle, this.last);
   }
+
+  /**
+   * -------------------------------------------------
+   * custom configuration for the component
+   */
+  private tenantConfig: TenantConfig;
 
   /**
    * The loading state indicates whether the component is still loading data
@@ -37,13 +30,26 @@ export class MyComponent {
   /**
    * The tenant for which this component is being rendered.
    */
-  private tenant: Tenants;
+  @Prop() tenant: Tenants;
 
   componentDidLoad() {
     setTimeout(() => {
-      this.tenant = this.tenant || Tenants.WFM; // Default to WFM if tenant is not provided - later we might want to throw an error....
-      // in production, this would be a call to the service to fetch tenant-specific data or configurations
-
+      this.tenant = this.tenant || Tenants.WFN; // Default to WFN if tenant is not provided - later we might want to throw an error....
+      //we're using setTimeout to simulate an async operation to fetch tenant information
+      switch (this.tenant) {
+        case Tenants.RUN:
+          // this.tenantConfig.navigationService = new RUNNaviagtionService();
+          // this.tenantConfig.dataService = new RUNDataService();
+          this.tenantConfig.navigationService = {};
+          this.tenantConfig.dataService = {};
+        case Tenants.WFN:
+          // this.tenantConfig.navigationService = new WFNNaviagtionService(); // WfnShell
+          // this.tenantConfig.dataService = new WFNataService(); // WfnShell / fetch
+          this.tenantConfig.navigationService = {}; // WfnShell
+          this.tenantConfig.dataService = {}; // WfnShell / fetch
+        default:
+        //do nothing for now...
+      }
       this.loading = false; // Simulate loading completion
     }, 1000); // Simulate async loading of tenant information
   }
@@ -57,9 +63,9 @@ export class MyComponent {
         {(() => {
           switch (this.tenant) {
             case Tenants.RUN:
-              return <RunTemplate output={this.getText()} />;
-            case Tenants.WFM:
-              return <WfmTemplate output={this.getText()} age={99} />;
+              return <one-column-layout output={this.getText()} config={this.tenantConfig}></one-column-layout>;
+            case Tenants.WFN:
+              return <two-column-layout output={this.getText()} age={99} config={this.tenantConfig}></two-column-layout>;
             default:
               // Fallback case if needed
               return <p>Error...invalid tenant.</p>;

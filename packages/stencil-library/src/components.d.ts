@@ -5,20 +5,29 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { TenantConfig, Tenants } from "./types/tenants";
+export { TenantConfig, Tenants } from "./types/tenants";
 export namespace Components {
     interface MyComponent {
-        /**
-          * The first name
-         */
         "first": string;
-        /**
-          * The last name
-         */
         "last": string;
-        /**
-          * The middle name
-         */
         "middle": string;
+        /**
+          * The tenant for which this component is being rendered.
+         */
+        "tenant": Tenants;
+    }
+    interface OneColumnLayout {
+        "config": TenantConfig;
+        "output": string;
+    }
+    interface OneColumnTemplate {
+        "output": string;
+    }
+    interface TwoColumnLayout {
+        "age": number;
+        "config": TenantConfig;
+        "output": string;
     }
 }
 declare global {
@@ -28,27 +37,58 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLOneColumnLayoutElement extends Components.OneColumnLayout, HTMLStencilElement {
+    }
+    var HTMLOneColumnLayoutElement: {
+        prototype: HTMLOneColumnLayoutElement;
+        new (): HTMLOneColumnLayoutElement;
+    };
+    interface HTMLOneColumnTemplateElement extends Components.OneColumnTemplate, HTMLStencilElement {
+    }
+    var HTMLOneColumnTemplateElement: {
+        prototype: HTMLOneColumnTemplateElement;
+        new (): HTMLOneColumnTemplateElement;
+    };
+    interface HTMLTwoColumnLayoutElement extends Components.TwoColumnLayout, HTMLStencilElement {
+    }
+    var HTMLTwoColumnLayoutElement: {
+        prototype: HTMLTwoColumnLayoutElement;
+        new (): HTMLTwoColumnLayoutElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
+        "one-column-layout": HTMLOneColumnLayoutElement;
+        "one-column-template": HTMLOneColumnTemplateElement;
+        "two-column-layout": HTMLTwoColumnLayoutElement;
     }
 }
 declare namespace LocalJSX {
     interface MyComponent {
-        /**
-          * The first name
-         */
         "first"?: string;
-        /**
-          * The last name
-         */
         "last"?: string;
-        /**
-          * The middle name
-         */
         "middle"?: string;
+        /**
+          * The tenant for which this component is being rendered.
+         */
+        "tenant"?: Tenants;
+    }
+    interface OneColumnLayout {
+        "config"?: TenantConfig;
+        "output"?: string;
+    }
+    interface OneColumnTemplate {
+        "output"?: string;
+    }
+    interface TwoColumnLayout {
+        "age"?: number;
+        "config"?: TenantConfig;
+        "output"?: string;
     }
     interface IntrinsicElements {
         "my-component": MyComponent;
+        "one-column-layout": OneColumnLayout;
+        "one-column-template": OneColumnTemplate;
+        "two-column-layout": TwoColumnLayout;
     }
 }
 export { LocalJSX as JSX };
@@ -56,6 +96,9 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "one-column-layout": LocalJSX.OneColumnLayout & JSXBase.HTMLAttributes<HTMLOneColumnLayoutElement>;
+            "one-column-template": LocalJSX.OneColumnTemplate & JSXBase.HTMLAttributes<HTMLOneColumnTemplateElement>;
+            "two-column-layout": LocalJSX.TwoColumnLayout & JSXBase.HTMLAttributes<HTMLTwoColumnLayoutElement>;
         }
     }
 }

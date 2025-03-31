@@ -11,6 +11,9 @@ import type { StencilReactComponent } from '@stencil/react-output-target/runtime
 import { createComponent } from '@stencil/react-output-target/runtime';
 import React from 'react';
 import { MyComponent as MyComponentElement, defineCustomElement as defineMyComponent } from "stencil-library/dist/components/my-component.js";
+import { OneColumnLayout as OneColumnLayoutElement, defineCustomElement as defineOneColumnLayout } from "stencil-library/dist/components/one-column-layout.js";
+import { OneColumnTemplate as OneColumnTemplateElement, defineCustomElement as defineOneColumnTemplate } from "stencil-library/dist/components/one-column-template.js";
+import { TwoColumnLayout as TwoColumnLayoutElement, defineCustomElement as defineTwoColumnLayout } from "stencil-library/dist/components/two-column-layout.js";
 
 type MyComponentEvents = NonNullable<unknown>;
 
@@ -21,4 +24,37 @@ export const MyComponent: StencilReactComponent<MyComponentElement, MyComponentE
     react: React,
     events: {} as MyComponentEvents,
     defineCustomElement: defineMyComponent
+});
+
+type OneColumnLayoutEvents = NonNullable<unknown>;
+
+export const OneColumnLayout: StencilReactComponent<OneColumnLayoutElement, OneColumnLayoutEvents> = /*@__PURE__*/ createComponent<OneColumnLayoutElement, OneColumnLayoutEvents>({
+    tagName: 'one-column-layout',
+    elementClass: OneColumnLayoutElement,
+    // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+    react: React,
+    events: {} as OneColumnLayoutEvents,
+    defineCustomElement: defineOneColumnLayout
+});
+
+type OneColumnTemplateEvents = NonNullable<unknown>;
+
+export const OneColumnTemplate: StencilReactComponent<OneColumnTemplateElement, OneColumnTemplateEvents> = /*@__PURE__*/ createComponent<OneColumnTemplateElement, OneColumnTemplateEvents>({
+    tagName: 'one-column-template',
+    elementClass: OneColumnTemplateElement,
+    // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+    react: React,
+    events: {} as OneColumnTemplateEvents,
+    defineCustomElement: defineOneColumnTemplate
+});
+
+type TwoColumnLayoutEvents = NonNullable<unknown>;
+
+export const TwoColumnLayout: StencilReactComponent<TwoColumnLayoutElement, TwoColumnLayoutEvents> = /*@__PURE__*/ createComponent<TwoColumnLayoutElement, TwoColumnLayoutEvents>({
+    tagName: 'two-column-layout',
+    elementClass: TwoColumnLayoutElement,
+    // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+    react: React,
+    events: {} as TwoColumnLayoutEvents,
+    defineCustomElement: defineTwoColumnLayout
 });
